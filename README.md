@@ -24,6 +24,8 @@
 
 # Other useful git commands
 
+- Pull changes to code
+  - git pull
 - Check what local branches you have
   - git branch
 - Switch to different branches
