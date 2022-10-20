@@ -1,12 +1,25 @@
 # 254-group13
 
+# How to run the program
+
+- cd to 254-group13 file
+- To run the program, type in terminal:
+  - chmod +x run.sh
+  - ./run.sh
+- Alternative way to run the program, type in terminal:
+  - sqlite-utils insert ./database/tasks.db tasks ./database/tasks.csv --csv --pk=task_id --ignore
+  - python3 main.py
+
 # Install PyQT(PySide6)
 
 - https://doc.qt.io/qtforpython/quickstart.html#requirements
 
 # Documentation
 
-- https://doc.qt.io/qtforpython/contents.html
+- PyQT
+  - https://doc.qt.io/qtforpython/contents.html
+- sqlite_utils
+  - https://sqlite-utils.datasette.io/en/stable/python-api.html
 
 # How to update GitHub
 
