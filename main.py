@@ -3,6 +3,7 @@
 
 import sys
 import random
+from database import Database
 from PySide6 import QtCore, QtWidgets, QtGui
 
 class GUI(QtWidgets.QWidget):
@@ -30,7 +31,16 @@ def main():
   widget = GUI()
   widget.resize(800, 600)
   widget.show()
-
+  task_id = 1211
+  task = "idk"
+  start_date = "10/30/22"
+  end_date = "11/30/22"
+  status = 1
+  params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
+  db = Database()
+  db.addTask(params)
+  db.removeTask(params)
+  db.outputDB() # outputs database to terminal
   sys.exit(app.exec())
 if __name__ == "__main__":
   main()
