@@ -1,56 +1,6 @@
 # Austin Sohn, Justin Sohn, Samuel Sandoval
 # main.py
 
-"""
-import sys, os
-import random
-from database import Database
-from PySide6 import QtCore, QtWidgets, QtGui
-from PyQt6 import QtWidgets, uic
-
-
-class GUI(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.hello = ["Hallo Welt", "Hei maailma", "Hola Mundo", "Привет мир"]
-
-        self.button = QtWidgets.QPushButton("Click me!")
-        self.text = QtWidgets.QLabel("Hello World",
-                                     alignment=QtCore.Qt.AlignCenter)
-
-        self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.text)
-        self.layout.addWidget(self.button)
-
-        self.button.clicked.connect(self.magic)
-
-    @QtCore.Slot()
-    def magic(self):
-        self.text.setText(random.choice(self.hello))
-
-def main():
-  app = QtWidgets.QApplication([])
-  widget = GUI()
-  widget.resize(800, 600)
-  widget.show()
-  task_id = 1211
-  task = "idk"
-  start_date = "10/30/22"
-  end_date = "11/30/22"
-  status = 1
-  params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
-  db = Database()
-  db.addTask(params)
-  db.removeTask(params)
-  db.outputDB() # outputs database to terminal
-  sys.exit(app.exec())
-if __name__ == "__main__":
-  main()
-"""
-
-# This Python file uses the following encoding: utf-8
-
 import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit,QListView
@@ -66,9 +16,15 @@ class GUI(QDialog):
 
   def addGoalFunction(self):
     #Typing in the Textbox and clicking add button to add to the List
-    content = self.goalInputBox.toPlainText()
-    self.goalInputBox.setPlainText(content)
-    self.goalList_Widget.addItem(content)
+    task = self.goalInputBox.toPlainText()
+    self.goalInputBox.setPlainText(task)
+    self.goalList_Widget.addItem(task)
+    task_id = int(self.db.highestTaskID()) + 1
+    status = 0
+    start_date = "10/30/22" # change to input later
+    end_date = "11/30/22" # change to input later
+    params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
+    self.db.addTask(params)
 
   def removeGoalFunction(self):
     #clicking on the Goal and clicking the remove button

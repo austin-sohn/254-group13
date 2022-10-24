@@ -16,18 +16,26 @@ class Database():
       return True
     return False
 
-  # outputs the entire database
+# outputs the entire database
   def outputDB(self):
     for row in self.db.query("SELECT * FROM " + self.tableName):
       print(row)
 
-  # adds task to database after checking it exists or not
+# adds task to database after checking it exists or not
   def addTask(self, params):
     if not self.checkTable(params):
       self.table.insert(params)
       print("Added")
 
+# removes the task
   def removeTask(self, params):
     if self.checkTable(params):
       self.table.delete(str(params.get("task_id")))
       print("Deleted")
+
+# find highest task_id
+  def highestTaskID(self):
+    cur = self.db.execute("SELECT MAX(task_id) FROM tasks").fetchall()
+    HTID = cur[0][0]
+    return HTID
+    
