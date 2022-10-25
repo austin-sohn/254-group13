@@ -5,38 +5,38 @@ import sqlite_utils
 class DatabaseClass():
   def __init__(self):
     super().__init__()
-    self.tableName = "tasks"
+    self.taskTableName = "tasks"
     self.db = sqlite_utils.Database("./database/tasks.db")
-    self.table = self.db.table(self.tableName, pk="task_id", 
+    self.taskTable = self.db.taskTable(self.taskTableName, pk="task_id", 
     columns={"task_id": int, "start_date": date, "end_date": date, "status": bool},
     column_order=("task_id","task","start_date","end_date","status"))
 
 # checks the table to see if it exsits
   def checkTable(self, params):
     if type(params) is dict:
-      self.count = self.table.count_where("task_id = " + str(params.get("task_id")))
+      self.count = self.taskTable.count_where("task_id = " + str(params.get("task_id")))
     else:
-      self.count = self.table.count_where("task_id = " + str(params))
+      self.count = self.taskTable.count_where("task_id = " + str(params))
     if self.count > 0:
       return True
     return False
 
 # outputs the entire database
   def outputDB(self):
-    for row in self.db.query("SELECT * FROM " + self.tableName):
+    for row in self.db.query("SELECT * FROM " + self.taskTableName):
       print(row)
 
 # get list of database
   def listDB(self):
     l = []
-    for row in self.db.query("SELECT * FROM " + self.tableName):
+    for row in self.db.query("SELECT * FROM " + self.taskTableName):
       l.append(row["task"])
     return l
-    
+
 # adds task to database after checking it exists or not
   def addTask(self, params):
     if not self.checkTable(params):
-      self.table.insert(params)
+      self.taskTable.insert(params)
       print("Added")
       self.outputDB()
 
@@ -44,7 +44,7 @@ class DatabaseClass():
   def removeTask(self, params):
     try:
       if self.checkTable(params):
-        self.table.delete(params)
+        self.taskTable.delete(params)
         print("Deleted")
         self.outputDB()
     except:
