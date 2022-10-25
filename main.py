@@ -26,6 +26,7 @@ class GUI(QDialog):
     task = self.goalInputBox.toPlainText()
     self.goalInputBox.setPlainText(task)
     self.goalList_Widget.addItem(task)
+    self.goalInputBox.clear()
     task_id = int(self.taskDB.highestTaskID()) + 1
     status = 0
     start_date = "10/30/22" # change to input later
