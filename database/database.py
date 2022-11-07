@@ -7,7 +7,7 @@ class DatabaseClass():
     super().__init__()
     self.taskTableName = "tasks"
     self.db = sqlite_utils.Database("./database/tasks.db")
-    self.taskTable = self.db.taskTable(self.taskTableName, pk="task_id", 
+    self.taskTable = self.db.table(self.tableName, pk="task_id", 
     columns={"task_id": int, "start_date": date, "end_date": date, "status": bool},
     column_order=("task_id","task","start_date","end_date","status"))
 
