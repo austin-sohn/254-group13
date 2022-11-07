@@ -7,7 +7,7 @@ class DatabaseClass():
     super().__init__()
     self.taskTableName = "tasks"
     self.db = sqlite_utils.Database("./database/tasks.db")
-    self.taskTable = self.db.table(self.tableName, pk="task_id", 
+    self.taskTable = self.db.table(self.taskTableName, pk="task_id", 
     columns={"task_id": int, "start_date": date, "end_date": date, "status": bool},
     column_order=("task_id","task","start_date","end_date","status"))
 
@@ -16,14 +16,12 @@ class DatabaseClass():
     if type(params) is dict:
       self.count = self.taskTable.count_where("task_id = " + str(params.get("task_id")))
     else:
-      self.count = self.taskTable.count_where("task_id = " + str(params))
-    if self.count > 0:
-      return True
-    return False
+      self.count = self.taskTable.count_where(f"task_id = {str(params)}")
+    return self.count > 0
 
 # outputs the entire database
   def outputDB(self):
-    for row in self.db.query("SELECT * FROM " + self.taskTableName):
+    for row in self.db.query(f"SELECT * FROM {self.taskTableName}"):
       print(row)
 
 # get list of database
@@ -53,12 +51,9 @@ class DatabaseClass():
 # find highest task_id
   def highestTaskID(self):
     cur = self.db.execute("SELECT MAX(task_id) FROM tasks").fetchall()
-    highestID = cur[0][0]
-    return highestID
+    return cur[0][0]
 
   def findTaskID(self, task):
-    # self.outputDB()
-    cur = self.db.execute("SELECT task_id FROM tasks WHERE task = ?", [task]).fetchall()
-    if cur:
-      task_id = int(cur[0][0])
-      return task_id
+    if cur := self.db.execute("SELECT task_id FROM tasks WHERE task = ?",
+                              [task]).fetchall():
+      return int(cur[0][0])
