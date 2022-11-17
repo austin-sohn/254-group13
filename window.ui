@@ -44,7 +44,7 @@
   <widget class="QPushButton" name="addGoalButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>80</x>
      <y>450</y>
      <width>75</width>
      <height>25</height>
@@ -61,7 +61,7 @@ color: black;</string>
   <widget class="QPushButton" name="removeGoalButton">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>180</x>
      <y>450</y>
      <width>101</width>
      <height>25</height>
@@ -73,6 +73,22 @@ color: black;</string>
    </property>
    <property name="text">
     <string>Remove Goal</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="exportButton">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>450</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white; color: black;</string>
+   </property>
+   <property name="text">
+    <string>Export Goal</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="goalInputBox">

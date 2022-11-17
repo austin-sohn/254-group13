@@ -87,6 +87,24 @@ color: black;</string>
    </property>
   </widget>
  </widget>
+ <widget class="QPushButton" name="exportButton">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>400</y>
+     <width>101</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+color: black;</string>
+   </property>
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </widget>
+ </widget>
  <resources/>
  <connections/>
 </ui>

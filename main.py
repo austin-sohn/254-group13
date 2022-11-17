@@ -14,6 +14,7 @@ class GUI(QDialog):
     loadUi("window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
+    self.exportButton.clicked.connect(self.exportFunc)
     self.taskDB = DatabaseClass()
 
   def addsPresetGoals(self):
@@ -52,6 +53,18 @@ class GUI(QDialog):
       # msg.setInformativeText('More information')
       # msg.setWindowTitle("Error")
       # msg.setStandartaskDButtons(QMessageBox.Ok | QMessageBox.Cancel)
+  
+  def exportFunc(self):
+    try:
+      clicked = self.goalList_Widget.currentRow()
+      task = self.goalList_Widget.selectedItems()
+      task = task[0].text()
+      with open('outputtedTask.txt', 'w') as f:
+          f.write(task)
+          print("Exported Task")
+    except IndexError:
+      print("error")
+
 
 def main():
   app = QtWidgets.QApplication([])
