@@ -54,6 +54,6 @@ class DatabaseClass():
     return cur[0][0]
 
   def findTaskID(self, task):
-    if cur := self.db.execute("SELECT task_id FROM tasks WHERE task = ?",
-                              [task]).fetchall():
+    cur = self.db.execute("SELECT task_id FROM tasks WHERE task = ?", [task]).fetchall()
+    if cur:
       return int(cur[0][0])
