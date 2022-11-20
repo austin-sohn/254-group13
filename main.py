@@ -7,6 +7,12 @@ from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView
 from PyQt6.uic import loadUi
 from PySide6 import QtCore, QtWidgets, QtGui
+import tkinter as tk
+from tkinter import *
+from tkinter import filedialog as fd
+from tkinter.messagebox import showinfo
+
+
 
 class GUI(QDialog):
   def __init__(self):
@@ -14,7 +20,8 @@ class GUI(QDialog):
     loadUi("window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
-    self.exportButton.clicked.connect(self.exportFunc)
+    self.importButton.clicked.connect(self.importGoalFunctionality)
+    self.exportButton.clicked.connect(self.exportGoalFunctionality)
     self.taskDB = DatabaseClass()
 
   def addsPresetGoals(self):
@@ -54,16 +61,35 @@ class GUI(QDialog):
       # msg.setWindowTitle("Error")
       # msg.setStandartaskDButtons(QMessageBox.Ok | QMessageBox.Cancel)
   
-  def exportFunc(self):
+
+  # Imports text file and creates goals
+  def importGoalFunctionality(self):
+    # import from local system. CURRENTLY WONT READ FILE AFTER
+    
+    filepath = "Goals.txt"
+    goalsFile = open(filepath , 'r')
+    print(goalsFile.readline())
+    status = 0
+    start_date = "10/30/22" # change to input later
+    end_date = "11/30/22" # change to input later
+    for task in goalsFile:
+      task_id = int(self.taskDB.highestTaskID()) + 1
+      params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
+      self.taskDB.addTask(params)
+
+
+  
+  # Exports goal into a text file 
+  def exportGoalFunctionality(self):
     try:
-      clicked = self.goalList_Widget.currentRow()
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
       with open('outputtedTask.txt', 'w') as f:
           f.write(task)
           print("Exported Task")
     except IndexError:
-      print("error")
+      print("Error: Select a goal before clicking export")
+    # add a message popup
 
 
 def main():
@@ -72,7 +98,6 @@ def main():
   widget.resize(600, 500)
   widget.addsPresetGoals()
   widget.show()
-  
 
   sys.exit(app.exec())
 if __name__ == "__main__":
