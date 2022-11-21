@@ -153,20 +153,6 @@ color: black;</string>
     <string>Export Goal</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="message_Widget">
-   <property name="geometry">
-    <rect>
-     <x>205</x>
-     <y>460</y>
-     <width>200</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgba(0, 0, 0, .25);
-color: white;</string>
-   </property>
-  </widget>
 
  </widget>
  <resources/>
