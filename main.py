@@ -61,6 +61,14 @@ class GUI(QDialog):
       # msg.setWindowTitle("Error")
       # msg.setStandartaskDButtons(QMessageBox.Ok | QMessageBox.Cancel)
   
+  def messageboxCreate(self, winTitle, genText):
+    msg = QtWidgets.QMessageBox()
+    msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+    msg.setText(winTitle)
+    msg.setInformativeText(genText)
+    msg.setWindowTitle(winTitle)
+    msg.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+    returnValue = msg.exec()
 
   # Imports text file and creates goals
   def importGoalFunctionality(self):
@@ -78,24 +86,27 @@ class GUI(QDialog):
       self.taskDB.addTask(params)
     self.goalList_Widget.clear()
     self.addsPresetGoals()
-    self.message_Widget.addItem("Goals file imported.")
-
-
+    self.messageboxCreate("Import Completed", "Goals file has been imported.")
 
   # Exports goal into a text file 
   def exportGoalFunctionality(self):
+
     try:
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
       with open('outputtedTask.txt', 'w') as f:
           f.write(task)
           print("Exported Task")
-          self.message_Widget.addItem("Task Exported")
-    except IndexError:
-      self.message_Widget.addItem("Error: Select a goal before clicking export")
-      print("Error: Select a goal before clicking export")
-    # add a message popup
+      self.messageboxCreate("Export Completed", "Task has been exported.")
     
+    except IndexError:
+      self.messageboxCreate("Export Error", "Error: Select a goal before clicking export")      
+      print("Error: Select a goal before clicking export")
+    
+
+    # reminders
+    # get to display messagebox based off deadline coming up 
+    # or text message appearing at bottom
 
 
 def main():
