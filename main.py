@@ -9,7 +9,7 @@ from PyQt6.uic import loadUi
 from PySide6 import QtCore, QtWidgets, QtGui
 import tkinter as tk
 from tkinter import *
-from tkinter import filedialog as fd
+from tkinter import filedialog
 from tkinter.messagebox import showinfo
 
 
@@ -66,23 +66,26 @@ class GUI(QDialog):
     msg.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
     returnValue = msg.exec()
 
-  # Imports text file and creates goals
+  # Imports text file from inputted filepath and creates goals
   def importGoalFunctionality(self):
-    # import from local system. CURRENTLY WONT READ FILE AFTER
-    
-    filepath = "Goals.txt"
-    goalsFile = open(filepath , 'r')
-    #print(goalsFile.readline())
-    status = 0
-    start_date = "10/30/22" # change to input later
-    end_date = "11/30/22" # change to input later
-    for task in goalsFile:
-      task_id = int(self.taskDB.highestTaskID()) + 1
-      params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
-      self.taskDB.addTask(params)
-    self.goalList_Widget.clear()
-    self.addsPresetGoals()
-    self.messageboxCreate("Import Completed", "Goals file has been imported.")
+    filepath = self.goalInputBox.toPlainText()
+    self.goalInputBox.setPlainText(filepath)
+
+    if len(filepath) < 1:
+      self.messageboxCreate("Import Error", "Type the filepath into the box above and then select import again.")
+    else:
+      self.goalInputBox.clear()
+      goalsFile = open(filepath , 'r')
+      status = 0
+      start_date = "10/30/22" # change to input later
+      end_date = "11/30/22" # change to input later
+      for task in goalsFile:
+        task_id = int(self.taskDB.highestTaskID()) + 1
+        params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
+        self.taskDB.addTask(params)
+      self.goalList_Widget.clear()
+      self.addsPresetGoals()
+      self.messageboxCreate("Import Completed", "Goals file has been imported.")
 
   # Exports goal into a text file 
   def exportGoalFunctionality(self):
