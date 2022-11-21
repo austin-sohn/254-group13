@@ -54,12 +54,8 @@ class GUI(QDialog):
         self.taskDB.removeTask(task_id)
     except IndexError:
       print("error")
-      # msg = QMessageBox()
-      # msg.setIcon(QMessageBox.critical())
-      # msg.setText("Error")
-      # msg.setInformativeText('More information')
-      # msg.setWindowTitle("Error")
-      # msg.setStandartaskDButtons(QMessageBox.Ok | QMessageBox.Cancel)
+      self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")      
+
   
   def messageboxCreate(self, winTitle, genText):
     msg = QtWidgets.QMessageBox()
@@ -104,10 +100,9 @@ class GUI(QDialog):
       print("Error: Select a goal before clicking export")
     
 
-    # reminders
+    # reminders func
     # get to display messagebox based off deadline coming up 
-    # or text message appearing at bottom
-
+    
 
 def main():
   app = QtWidgets.QApplication([])
