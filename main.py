@@ -3,6 +3,7 @@
 
 import sys
 from database.database import DatabaseClass
+from datetime import datetime
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView
 from PyQt6.uic import loadUi
@@ -11,8 +12,6 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import showinfo
-
-
 
 class GUI(QDialog):
   def __init__(self):
@@ -23,11 +22,13 @@ class GUI(QDialog):
     self.importButton.clicked.connect(self.importGoalFunctionality)
     self.exportButton.clicked.connect(self.exportGoalFunctionality)
     self.taskDB = DatabaseClass()
+    self.reminders()
 
   def addsPresetGoals(self):
     l = self.taskDB.listDB()
     for x in l:
-      self.goalList_Widget.addItem(x)
+      self.goalList_Widget.addItem(x['task'])
+
 
   def addGoalFunction(self):
     #Typing in the Textbox and clicking add button to add to the List
@@ -38,7 +39,7 @@ class GUI(QDialog):
     task_id = int(self.taskDB.highestTaskID()) + 1
     status = 0
     start_date = "10/30/22" # change to input later
-    end_date = "11/30/22" # change to input later
+    end_date = "11/22/22" # change to input later
     params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
     self.taskDB.addTask(params)
 
@@ -55,7 +56,6 @@ class GUI(QDialog):
     except IndexError:
       print("error")
       self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")      
-
   
   def messageboxCreate(self, winTitle, genText):
     msg = QtWidgets.QMessageBox()
@@ -103,7 +103,25 @@ class GUI(QDialog):
       print("Error: Select a goal before clicking export")
     
 
-    # reminders func
+  # Reminders users about their goals
+  def reminders(self):
+    l = self.taskDB.listDB()
+    for task in l:
+      d1 = datetime.strptime(task['end_date'], "%m/%d/%y").date()
+      d2 = datetime.now().date()
+
+      delta =  d2 - d1 
+      print(delta.days)
+      if int(delta.days) >= 0:
+        # reminder
+        msg = "Don't forget to compete your "
+        msg += task['task']
+        msg += ', the deadline is coming up!'
+        self.messageboxCreate("Goal Reminder", msg)     
+        
+
+
+
     # get to display messagebox based off deadline coming up 
     
 
@@ -113,6 +131,10 @@ def main():
   widget.resize(600, 500)
   widget.addsPresetGoals()
   widget.show()
+  widget.reminders()
+
+  
+
 
   sys.exit(app.exec())
 if __name__ == "__main__":
