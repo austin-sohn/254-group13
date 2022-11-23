@@ -131,7 +131,6 @@ def main():
   widget.resize(600, 500)
   widget.addsPresetGoals()
   widget.show()
-  widget.reminders()
 
   
 
