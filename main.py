@@ -33,6 +33,9 @@ class GUI(QDialog):
   def addGoalFunction(self):
     #Typing in the Textbox and clicking add button to add to the List
     task = self.goalInputBox.toPlainText()
+    if len(task) < 1:
+      self.messageboxCreate("Add Goal Error", "Make sure to type your goal in before selecting add goal") 
+      return
     self.goalInputBox.setPlainText(task)
     self.goalList_Widget.addItem(task)
     self.goalInputBox.clear()
