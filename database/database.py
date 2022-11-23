@@ -28,7 +28,7 @@ class DatabaseClass():
   def listDB(self):
     l = []
     for row in self.db.query("SELECT * FROM " + self.taskTableName):
-      l.append(row["task"])
+      l.append(row)
     return l
 
 # adds task to database after checking it exists or not
