@@ -92,7 +92,6 @@ class GUI(QDialog):
 
   # Exports goal into a text file 
   def exportGoalFunctionality(self):
-
     try:
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
@@ -103,8 +102,7 @@ class GUI(QDialog):
     
     except IndexError:
       self.messageboxCreate("Export Error", "Error: Select a goal before clicking export")      
-      print("Error: Select a goal before clicking export")
-    
+      print("Error: Select a goal before clicking export") 
 
   # Reminders users about their goals
   def reminders(self):
@@ -115,18 +113,13 @@ class GUI(QDialog):
 
       delta =  d2 - d1 
       print(delta.days)
-      if int(delta.days) >= 0:
+      if int(delta.days) >= -2:
         # reminder
         msg = "Don't forget to compete your "
         msg += task['task']
         msg += ', the deadline is coming up!'
         self.messageboxCreate("Goal Reminder", msg)     
-        
-
-
-
-    # get to display messagebox based off deadline coming up 
-    
+            
 
 def main():
   app = QtWidgets.QApplication([])
