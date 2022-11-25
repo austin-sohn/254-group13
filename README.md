@@ -9,6 +9,11 @@
   - pip3 install pyqt6
 - sqlite_utils
   - pip3 install sqlite-utils
+- Tkinter
+  - macos
+    - brew install python-tk
+  - linux
+    pip3 install tk
 
 # How to run the program
 
