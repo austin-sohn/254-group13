@@ -15,21 +15,27 @@ from tkinter.messagebox import showinfo
 
 class GUI(QDialog):
   def __init__(self):
+    self.table = "tasks"
     super(GUI,self).__init__()
-    loadUi("window.ui",self)
+    loadUi("./UI/window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
     self.importButton.clicked.connect(self.importGoalFunctionality)
     self.exportButton.clicked.connect(self.exportGoalFunctionality)
-    self.taskDB = DatabaseClass()
+    self.database = DatabaseClass()
     self.reminders()
 
+    # outputs contents of db on startup
+    self.database.outputDB(self.table)
+    print("----------------")
+    self.database.outputDB("subtasks")
+
+
   def addsPresetGoals(self):
-    l = self.taskDB.listDB()
+    l = self.database.listDB(self.table)
     for x in l:
       self.goalList_Widget.addItem(x['task'])
-
-
+      
   def addGoalFunction(self):
     #Typing in the Textbox and clicking add button to add to the List
     task = self.goalInputBox.toPlainText()
@@ -39,12 +45,12 @@ class GUI(QDialog):
     self.goalInputBox.setPlainText(task)
     self.goalList_Widget.addItem(task)
     self.goalInputBox.clear()
-    task_id = int(self.taskDB.highestTaskID()) + 1
+    task_id = int(self.database.highestTaskID(self.table)) + 1
     status = 0
     start_date = "10/30/22" # change to input later
     end_date = "11/22/22" # change to input later
     params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
-    self.taskDB.addTask(params)
+    self.database.addTask(self.table, params)
 
   def removeGoalFunction(self):
     #clicking on the Goal and clicking the remove button
@@ -53,9 +59,9 @@ class GUI(QDialog):
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
       self.goalList_Widget.takeItem(clicked)
-      task_id = self.taskDB.findTaskID(task)
+      task_id = self.database.findTaskID(self.table,task)
       if(task_id):
-        self.taskDB.removeTask(task_id)
+        self.database.removeTask(self.table,task_id)
     except IndexError:
       print("error")
       self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")      
@@ -83,9 +89,9 @@ class GUI(QDialog):
       start_date = "10/30/22" # change to input later
       end_date = "11/30/22" # change to input later
       for task in goalsFile:
-        task_id = int(self.taskDB.highestTaskID()) + 1
+        task_id = int(self.database.highestTaskID(self.table)) + 1
         params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
-        self.taskDB.addTask(params)
+        self.database.addTask(self.table,params)
       self.goalList_Widget.clear()
       self.addsPresetGoals()
       self.messageboxCreate("Import Completed", "Goals file has been imported.")
@@ -106,20 +112,18 @@ class GUI(QDialog):
 
   # Reminders users about their goals
   def reminders(self):
-    l = self.taskDB.listDB()
+    l = self.database.listDB(self.table)
     for task in l:
       d1 = datetime.strptime(task['end_date'], "%m/%d/%y").date()
       d2 = datetime.now().date()
 
       delta =  d2 - d1 
-      print(delta.days)
-      if int(delta.days) >= -2:
+      if int(delta.days) >= -2 and task['task'] != None:
         # reminder
         msg = "Don't forget to compete your "
         msg += task['task']
         msg += ', the deadline is coming up!'
         self.messageboxCreate("Goal Reminder", msg)     
-            
 
 def main():
   app = QtWidgets.QApplication([])
