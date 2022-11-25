@@ -12,8 +12,8 @@
 - Tkinter
   - macos
     - brew install python-tk
-  - linux
-    pip3 install tk
+  - linux (distros with apt)
+    - sudo apt-get install python3-tk
 
 # How to run the program
 
@@ -21,8 +21,12 @@
 - To run the program, type in terminal:
   - chmod +x run.sh
   - ./run.sh
-- Alternative way to run the program, type in terminal:
-  - sqlite-utils insert ./database/tasks.db tasks ./database/tasks.csv --csv --pk=task_id --ignore
+- An alternative way to run the program is to enter these commands one by one:
+  - sqlite-utils create-database ./database/database.db
+  - sqlite-utils create-table ./database/database.db tasks task_id integer --pk=task_id 
+  - sqlite-utils insert ./database/database.db tasks ./database/tasks.csv --csv --ignore --alter 
+  - sqlite-utils create-table ./database/database.db subtasks subtask_id integer --pk=subtask_id
+  - sqlite-utils insert ./database/database.db subtasks ./database/subtasks.csv --csv --ignore --alter
   - python3 main.py
 
 # Documentation
