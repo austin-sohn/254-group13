@@ -30,7 +30,6 @@ class GUI(QDialog):
     print("----------------")
     self.database.outputDB("subtasks")
 
-
   def addsPresetGoals(self):
     l = self.database.listDB(self.table)
     for x in l:
@@ -131,10 +130,6 @@ def main():
   widget.resize(600, 500)
   widget.addsPresetGoals()
   widget.show()
-
-  
-
-
   sys.exit(app.exec())
 if __name__ == "__main__":
   main()
