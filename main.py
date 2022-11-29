@@ -7,11 +7,11 @@ from datetime import datetime
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView
 from PyQt6.uic import loadUi
-from PySide6 import QtCore, QtWidgets, QtGui
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import showinfo
+from secondwindow import Ui_completedTask
 
 class GUI(QDialog):
   def __init__(self):
@@ -22,6 +22,7 @@ class GUI(QDialog):
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
     self.importButton.clicked.connect(self.importGoalFunctionality)
     self.exportButton.clicked.connect(self.exportGoalFunctionality)
+    self.showCompletedGoalButton.clicked.connect(self.showCompletedGoals)
     self.database = DatabaseClass()
     self.reminders()
 
@@ -64,7 +65,13 @@ class GUI(QDialog):
         self.database.removeTask(self.table,task_id)
     except IndexError:
       print("error")
-      self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")      
+      self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")
+
+  def showCompletedGoals(self,Dialog):
+    self.window = QtWidgets.QDialog()
+    self.ui = Ui_completedTask()
+    self.ui.setupUi(self.window)
+    self.window.show()   
   
   def messageboxCreate(self, winTitle, genText):
     msg = QtWidgets.QMessageBox()
@@ -125,15 +132,17 @@ class GUI(QDialog):
         msg += ', the deadline is coming up!'
         self.messageboxCreate("Goal Reminder", msg)     
 
+class secondWindow(QDialog):
+   def __init__(self):
+    super(secondWindow,self).__init__()
+    loadUi("secondwindow.ui",self)
+
 def main():
   app = QtWidgets.QApplication([])
   widget = GUI()
-  widget.resize(600, 500)
+  widget.showFullScreen()
   widget.addsPresetGoals()
   widget.show()
-
-  
-
 
   sys.exit(app.exec())
 if __name__ == "__main__":
