@@ -20,8 +20,8 @@ class GUI(QDialog):
     loadUi("./UI/window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
-    self.importButton.clicked.connect(self.importGoalFunctionality)
-    self.exportButton.clicked.connect(self.exportGoalFunctionality)
+    self.importButton.clicked.connect(self.importGoal)
+    self.exportButton.clicked.connect(self.exportGoal)
     self.database = DatabaseClass()
     self.reminders()
 
@@ -75,7 +75,7 @@ class GUI(QDialog):
     returnValue = msg.exec()
 
   # Imports text file from inputted filepath and creates goals
-  def importGoalFunctionality(self):
+  def importGoal(self):
     filepath = self.goalInputBox.toPlainText()
     self.goalInputBox.setPlainText(filepath)
 
@@ -96,7 +96,7 @@ class GUI(QDialog):
       self.messageboxCreate("Import Completed", "Goals file has been imported.")
 
   # Exports goal into a text file 
-  def exportGoalFunctionality(self):
+  def exportGoal(self):
     try:
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
