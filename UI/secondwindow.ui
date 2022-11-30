@@ -13,221 +13,36 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: #363636</string>
-  </property>
-  <widget class="QPushButton" name="addGoalButton">
+  <widget class="QLabel" name="completedGoal_label">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>730</y>
-     <width>75</width>
-     <height>25</height>
+     <x>610</x>
+     <y>130</y>
+     <width>241</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Completed Goal(s)</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="completedGoal_listWidget">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>230</y>
+     <width>931</width>
+     <height>611</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: white;
 color: black;</string>
-   </property>
-   <property name="text">
-    <string>Add Goal</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="removeGoalButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>730</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Remove Goal</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="goalInputBox">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>810</y>
-     <width>551</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color:black;</string>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="goalList_Widget">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>110</y>
-     <width>471</width>
-     <height>591</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="showCompletedGoalButton">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>570</y>
-     <width>151</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Show Completed Goal(s)</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="importButton">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>320</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white; color: black;</string>
-   </property>
-   <property name="text">
-    <string>Import Goal</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="exportButton">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>400</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white; color: black;</string>
-   </property>
-   <property name="text">
-    <string>Export Goal</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Subgoal_LabelTitle">
-   <property name="geometry">
-    <rect>
-     <x>1080</x>
-     <y>50</y>
-     <width>160</width>
-     <height>33</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 28px</string>
-   </property>
-   <property name="text">
-    <string>Subgoal</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="subgoalList_Widget">
-   <property name="geometry">
-    <rect>
-     <x>920</x>
-     <y>120</y>
-     <width>461</width>
-     <height>591</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Goal_LabelTitle">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>50</y>
-     <width>160</width>
-     <height>33</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 28px</string>
-   </property>
-   <property name="text">
-    <string>Goal</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="addSubGoalButton">
-   <property name="geometry">
-    <rect>
-     <x>1020</x>
-     <y>740</y>
-     <width>91</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Add Subgoal</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="removeSubGoalButton">
-   <property name="geometry">
-    <rect>
-     <x>1200</x>
-     <y>740</y>
-     <width>111</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Remove Subgoal</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="completeGoal">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>480</y>
-     <width>141</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Complete Goal</string>
    </property>
   </widget>
  </widget>

@@ -19,24 +19,7 @@
   <widget class="QPushButton" name="addGoalButton">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>730</y>
-     <width>75</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: white;
-color: black;</string>
-   </property>
-   <property name="text">
-    <string>Add Goal</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="removeGoalButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
+     <x>160</x>
      <y>730</y>
      <width>101</width>
      <height>25</height>
@@ -47,14 +30,31 @@ color: black;</string>
 color: black;</string>
    </property>
    <property name="text">
-    <string>Remove Goal</string>
+    <string>+</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="removeGoalButton">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>730</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+color: black;</string>
+   </property>
+   <property name="text">
+    <string>- </string>
    </property>
   </widget>
   <widget class="QTextEdit" name="goalInputBox">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>810</y>
+     <x>460</x>
+     <y>800</y>
      <width>551</width>
      <height>41</height>
     </rect>
@@ -98,9 +98,9 @@ color: black;</string>
   <widget class="QPushButton" name="importButton">
    <property name="geometry">
     <rect>
-     <x>690</x>
+     <x>660</x>
      <y>320</y>
-     <width>101</width>
+     <width>151</width>
      <height>25</height>
     </rect>
    </property>
@@ -114,9 +114,9 @@ color: black;</string>
   <widget class="QPushButton" name="exportButton">
    <property name="geometry">
     <rect>
-     <x>690</x>
+     <x>660</x>
      <y>400</y>
-     <width>101</width>
+     <width>151</width>
      <height>25</height>
     </rect>
    </property>
@@ -150,7 +150,7 @@ color: black;</string>
    <property name="geometry">
     <rect>
      <x>920</x>
-     <y>120</y>
+     <y>110</y>
      <width>461</width>
      <height>591</height>
     </rect>
@@ -182,8 +182,8 @@ color: black;</string>
   <widget class="QPushButton" name="addSubGoalButton">
    <property name="geometry">
     <rect>
-     <x>1020</x>
-     <y>740</y>
+     <x>1000</x>
+     <y>730</y>
      <width>91</width>
      <height>25</height>
     </rect>
@@ -193,14 +193,14 @@ color: black;</string>
 color: black;</string>
    </property>
    <property name="text">
-    <string>Add Subgoal</string>
+    <string>+</string>
    </property>
   </widget>
   <widget class="QPushButton" name="removeSubGoalButton">
    <property name="geometry">
     <rect>
-     <x>1200</x>
-     <y>740</y>
+     <x>1210</x>
+     <y>730</y>
      <width>111</width>
      <height>25</height>
     </rect>
@@ -210,15 +210,15 @@ color: black;</string>
 color: black;</string>
    </property>
    <property name="text">
-    <string>Remove Subgoal</string>
+    <string>-</string>
    </property>
   </widget>
   <widget class="QPushButton" name="completeGoal">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>660</x>
      <y>480</y>
-     <width>141</width>
+     <width>151</width>
      <height>25</height>
     </rect>
    </property>
@@ -228,6 +228,77 @@ color: black;</string>
    </property>
    <property name="text">
     <string>Complete Goal</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="showSubGoalButton">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>650</y>
+     <width>151</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+color: black;</string>
+   </property>
+   <property name="text">
+    <string>Show SubGoal(s)</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="startDateInputBox">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>200</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+color:black;</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="endDateInputBox">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>200</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;
+color:black;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>160</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start Date</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>160</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>End Date</string>
    </property>
   </widget>
  </widget>
