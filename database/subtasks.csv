@@ -1,2 +1,9 @@
 subtask_id,id,subtask,start_date,end_date,status
 1,1,Add a database,10/30/22,11/10/22,0
+2,1,Add UI,10/30/22,11/15/22,0
+3,1,Connect UI to databse,11/15/22,11/17/22,0
+4,1,Do project documentation,11/17/22,12/4/22,0
+5,1,Present,12/5/22,12/5/22,0
+6,2,Win the lottery,,0
+7,2,Invest money,,0
+8,2,Live off investments,,0
