@@ -12,13 +12,17 @@ class DatabaseClass():
     columns={"task_id": int, "start_date": date, "end_date": date, "status": bool},
     column_order=("task_id","task","start_date","end_date","status"))
     self.subtaskTable = self.db.table(self.subtaskTableName, pk="subtask_id", 
-    columns={"subtask_id": int, "id":int, "start_date": date, "end_date": date, "status": bool},
-    column_order=("task_id","id","task","start_date","end_date","status"))
+    columns={"subtask_id": int, "id":int, "subtask":str},
+    column_order=("subtask_id","id","subtask"))
 
 # checks the table to see if it exsits
   def checkTable(self, table, params):
     if type(params) is dict:
-      count = self.db[table].count_where("task_id = " + str(params.get("task_id")))
+      if table == "tasks":
+        count = self.db[table].count_where("task_id = " + str(params.get("task_id")))
+      elif table == "subtasks":
+        count = self.db[table].count_where("subtask_id = " + str(params.get("subtask_id")))
+
     else:
       count = self.db[table].count_where(f"task_id = {str(params)}")
     return count > 0
@@ -39,6 +43,7 @@ class DatabaseClass():
   def addTask(self, table, params):
     if not self.checkTable(table, params):
       self.db[table].insert(params)
+    
       print("Added")
       # self.outputDB(table)
 
