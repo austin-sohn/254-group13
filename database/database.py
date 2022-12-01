@@ -88,3 +88,19 @@ class DatabaseClass():
       cur = self.db.execute("SELECT subtask_id FROM subtasks WHERE subtask = ?", [task]).fetchall()
     if cur:
       return int(cur[0][0])
+  
+  # finds all completed tasks (tasks with status of 1)
+  def findCompletedTask(self):
+    l = []
+    cur = self.db.execute(f"SELECT task FROM {self.taskTableName} WHERE STATUS = 1").fetchall()
+    # returns a list of all tasks with the status of 1
+    for i in range(len(cur)):
+      l.append(cur[i][0])
+    return l
+
+  # only complete tasks (for points), subtasks can be removed
+  def completeTask(self, table, id):
+    # sets status of task to 1
+    if self.checkTable(table, id):
+      if table == "tasks":
+        self.db[table].update(id, {"status": 1})

@@ -1,3 +1,4 @@
 env
 __pycache__
-database/tasks.db
+database/database.db
+resources/points.txt

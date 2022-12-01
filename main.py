@@ -5,13 +5,12 @@ import sys
 from database.database import DatabaseClass
 from datetime import datetime
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView
+from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView, QLabel
 from PyQt6.uic import loadUi
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import showinfo
-import secondwindow as comp
 
 class GUI(QDialog):
   def __init__(self):
@@ -21,19 +20,15 @@ class GUI(QDialog):
     loadUi("./UI/window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
-    #self.importButton.clicked.connect(self.importGoalFunctionality)
-    #self.exportButton.clicked.connect(self.exportGoalFunctionality)
     self.addSubGoalButton.clicked.connect(self.addSubTask)
     self.removeSubGoalButton.clicked.connect(self.removeSubTask)
     self.showCompletedGoalButton.clicked.connect(self.showCompletedGoals)
-    #self.addStartDateButton.clicked.connect(self.addGoalFunction)
-    #self.addEndDateButton.clicked.connect(self.addGoalFunction)
+    self.completeGoal.clicked.connect(self.completeTask)
     self.showSubGoalButton.clicked.connect(self.showSubGoals)
     self.importButton.clicked.connect(self.importGoal)
     self.exportButton.clicked.connect(self.exportGoal)
     self.database = DatabaseClass()
     self.reminders()
-
     # outputs contents of db on startup
     self.database.outputDB(self.table)
     print("----------------")
@@ -41,8 +36,13 @@ class GUI(QDialog):
 
   def addsPresetGoals(self):
     l = self.database.listDB(self.table)
-    for x in l:
-      self.goalList_Widget.addItem(x['task'])
+    l2 = self.getCompletedTasks()
+    taskList = []
+    for e in l:
+      taskList.append(e["task"])
+    l3 = [x for x in taskList if x not in l2]
+    for x in l3:
+      self.goalList_Widget.addItem(x)
       
   def addGoalFunction(self):
     #Typing in the Textbox and clicking add button to add to the List
@@ -59,8 +59,6 @@ class GUI(QDialog):
     self.endDateInputBox.clear()
     task_id = int(self.database.highestTaskID(self.table)) + 1
     status = 0
-    #start_date = "10/30/22" # change to input later
-    #end_date = "11/22/22" # change to input later
     params = {"task_id":task_id, "task":task, "start_date":start_date, "end_date":end_date, "status":status}
     self.database.addTask(self.table, params)
     self.database.outputDB(self.table)
@@ -80,11 +78,9 @@ class GUI(QDialog):
       print("error")
       self.messageboxCreate("Removing Error", "Error: Cannot remove a blank goal, please select an existing goal to remove.")
 
-
   def addSubTask(self):
     task = self.goalList_Widget.selectedItems()
     task = task[0].text()
-    #print(task)
     id = self.database.findTaskID(self.table,task)
     subtask = self.goalInputBox.toPlainText()
     self.goalInputBox.setPlainText(subtask)
@@ -94,7 +90,6 @@ class GUI(QDialog):
     params = {"subtask_id":subtask_id, "id":id, "subtask": subtask}
     self.database.addTask(self.subTable, params)    
     self.database.outputDB(self.subTable)
-
 
   def removeSubTask(self):
     try:
@@ -110,14 +105,6 @@ class GUI(QDialog):
     except IndexError:
       print("error")
       self.messageboxCreate("Removing Error", "Error: Cannot remove a blank subgoal, please select an existing subgoal to remove.")
-    
-#  def addStartDate(self):
-#    clicked = self.goalList_Widget.selectedItem()
-#    id = self.database.findTaskID(self.table,clicked)
-#    date = self.startDateInputBox.toPlainText()
-#    self.addDateInputBox.clear()
-#    params = {"date":date, }
-#    self.database.addTask(self.subTable, params)
   
   def showSubGoals(self):
     self.subgoalList_Widget.clear()
@@ -128,13 +115,6 @@ class GUI(QDialog):
     print(subtask)
     for e in subtask:
       self.subgoalList_Widget.addItem(e)
-    
-
-  def showCompletedGoals(self,Dialog):
-    self.window = QtWidgets.QDialog()
-    self.ui = comp.Ui_completedTask()
-    self.ui.setupUi(self.window)
-    self.window.show()
   
   def messageboxCreate(self, winTitle, genText):
     msg = QtWidgets.QMessageBox()
@@ -194,17 +174,44 @@ class GUI(QDialog):
         msg += task['task']
         msg += ', the deadline is coming up!'
         self.messageboxCreate("Goal Reminder", msg)   
+  
+  def getCompletedTasks(self):
+    completedList = self.database.findCompletedTask()
+    #print(completedList)
+    return completedList
 
-class secondWindow(QDialog):
-   def __init__(self):
-    super(secondWindow,self).__init__()
-    loadUi("secondwindow.ui",self)
+  def completeTask(self):
+    print("press")
+
+  def showCompletedGoals(self):
+    completedTasks = self.getCompletedTasks()
+    msgBox = QMessageBox()
+    msgBox.setWindowTitle("Completed Tasks")
+    task = ""
+    if completedTasks:
+      for e in completedTasks:
+        task += (e + "\n")
+      msgBox.setText(task) 
+    else:
+      msgBox.setText("Completed task list is empty")
+    msgBox.exec()
+
+  def pointSystem(self):
+    points = 0
+    # creates the file if it doesn't exist
+    with open('./resources/points.txt', 'w+') as f:
+      # adds points
+      l = self.getCompletedTasks()
+      for line in l:
+        points += 1
+      f.write(str(points))
+  
 
 def main():
   app = QtWidgets.QApplication([])
   widget = GUI()
-  widget.showFullScreen()
   widget.addsPresetGoals()
+  widget.pointSystem()
   widget.show()
 
   sys.exit(app.exec())
