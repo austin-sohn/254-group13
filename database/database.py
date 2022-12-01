@@ -31,6 +31,20 @@ class DatabaseClass():
   def outputDB(self, table):
     for row in self.db.query(f"SELECT * FROM {table}"):
       print(row)
+  
+  def traverseSubTaskDB(self,task_id):
+    sameid = []
+    for i in self.db.query("SELECT id, subtask FROM subtasks"):
+      
+      #if subtask id is the same as task id then return it
+      if int(i["id"]) == task_id:
+        
+        #append the correct subtask into the new list
+        sameid.append(i["subtask"])
+
+        # return the subtask
+    return sameid
+
 
 # get list of database
   def listDB(self, table):

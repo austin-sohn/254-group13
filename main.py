@@ -11,7 +11,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import showinfo
-from secondwindow import Ui_completedTask
+import secondwindow as comp
 
 class GUI(QDialog):
   def __init__(self):
@@ -21,8 +21,8 @@ class GUI(QDialog):
     loadUi("./UI/window.ui",self)
     self.addGoalButton.clicked.connect(self.addGoalFunction)
     self.removeGoalButton.clicked.connect(self.removeGoalFunction)
-    self.importButton.clicked.connect(self.importGoalFunctionality)
-    self.exportButton.clicked.connect(self.exportGoalFunctionality)
+    #self.importButton.clicked.connect(self.importGoalFunctionality)
+    #self.exportButton.clicked.connect(self.exportGoalFunctionality)
     self.addSubGoalButton.clicked.connect(self.addSubTask)
     self.removeSubGoalButton.clicked.connect(self.removeSubTask)
     self.showCompletedGoalButton.clicked.connect(self.showCompletedGoals)
@@ -120,16 +120,21 @@ class GUI(QDialog):
 #    self.database.addTask(self.subTable, params)
   
   def showSubGoals(self):
+    self.subgoalList_Widget.clear()
     task = self.goalList_Widget.selectedItems()
+    task = task[0].text()
     id = self.database.findTaskID(self.table,task)
+    subtask = self.database.traverseSubTaskDB(id)
+    print(subtask)
+    for e in subtask:
+      self.subgoalList_Widget.addItem(e)
     
-
 
   def showCompletedGoals(self,Dialog):
     self.window = QtWidgets.QDialog()
-    self.ui = Ui_completedTask()
+    self.ui = comp.Ui_completedTask()
     self.ui.setupUi(self.window)
-    self.window.show()   
+    self.window.show()
   
   def messageboxCreate(self, winTitle, genText):
     msg = QtWidgets.QMessageBox()
