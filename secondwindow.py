@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_completedTask(object):
     def setupUi(self, completedTask):
         completedTask.setObjectName("completedTask")
-        completedTask.resize(1470, 920)
+        completedTask.resize(1600, 900)
         self.completedGoal_label = QtWidgets.QLabel(completedTask)
         self.completedGoal_label.setGeometry(QtCore.QRect(610, 130, 241, 61))
         font = QtGui.QFont()

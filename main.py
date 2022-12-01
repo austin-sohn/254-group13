@@ -203,7 +203,7 @@ class secondWindow(QDialog):
 def main():
   app = QtWidgets.QApplication([])
   widget = GUI()
-  widget.showFullScreen()
+  widget.resize(1600,900)
   widget.addsPresetGoals()
   widget.show()
 

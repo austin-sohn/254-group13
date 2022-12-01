@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1470</width>
-    <height>920</height>
+    <width>600</width>
+    <height>800</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,8 +22,8 @@
   <widget class="QLabel" name="completedGoal_label">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>130</y>
+     <x>190</x>
+     <y>40</y>
      <width>241</width>
      <height>61</height>
     </rect>
@@ -34,10 +40,10 @@
   <widget class="QListWidget" name="completedGoal_listWidget">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>230</y>
-     <width>931</width>
-     <height>611</height>
+     <x>40</x>
+     <y>110</y>
+     <width>531</width>
+     <height>621</height>
     </rect>
    </property>
    <property name="styleSheet">
