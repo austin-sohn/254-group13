@@ -5,7 +5,7 @@ import sys
 from database.database import DatabaseClass
 from datetime import datetime
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QDialog, QApplication, QTextEdit, QMessageBox, QListView, QLabel
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 import tkinter as tk
 from tkinter import *
@@ -23,10 +23,11 @@ class GUI(QDialog):
     self.addSubGoalButton.clicked.connect(self.addSubTask)
     self.removeSubGoalButton.clicked.connect(self.removeSubTask)
     self.showCompletedGoalButton.clicked.connect(self.showCompletedGoals)
-    self.completeGoal.clicked.connect(self.completeTask)
+    self.completeGoal.clicked.connect(self.completeTheTask)
     self.showSubGoalButton.clicked.connect(self.showSubGoals)
     self.importButton.clicked.connect(self.importGoal)
     self.exportButton.clicked.connect(self.exportGoal)
+    self.showPointsButton.clicked.connect(self.getPoints)
     self.database = DatabaseClass()
     self.reminders()
     # outputs contents of db on startup
@@ -112,7 +113,7 @@ class GUI(QDialog):
     task = task[0].text()
     id = self.database.findTaskID(self.table,task)
     subtask = self.database.traverseSubTaskDB(id)
-    print(subtask)
+    # print(subtask)
     for e in subtask:
       self.subgoalList_Widget.addItem(e)
   
@@ -180,14 +181,20 @@ class GUI(QDialog):
     #print(completedList)
     return completedList
 
-  def completeTask(self):
-    print("press")
+  def completeTheTask(self):
+    clicked = self.goalList_Widget.currentRow()
+    task = self.goalList_Widget.selectedItems()
+    task = task[0].text()
+    id = self.database.findTaskID(self.table,task)
+    self.database.completeTask(id)
+    self.goalList_Widget.takeItem(clicked)
 
   def showCompletedGoals(self):
     completedTasks = self.getCompletedTasks()
     msgBox = QMessageBox()
     msgBox.setWindowTitle("Completed Tasks")
     task = ""
+    print(completedTasks)
     if completedTasks:
       for e in completedTasks:
         task += (e + "\n")
@@ -196,7 +203,7 @@ class GUI(QDialog):
       msgBox.setText("Completed task list is empty")
     msgBox.exec()
 
-  def pointSystem(self):
+  def getPoints(self):
     points = 0
     # creates the file if it doesn't exist
     with open('./resources/points.txt', 'w+') as f:
@@ -205,13 +212,16 @@ class GUI(QDialog):
       for line in l:
         points += 1
       f.write(str(points))
-  
+    msgBox = QMessageBox()
+    msgBox.setWindowTitle("Completed Tasks")
+    msgBox.setText(str(points))
+    msgBox.exec()
 
 def main():
   app = QtWidgets.QApplication([])
   widget = GUI()
+  widget.setWindowTitle("Goal List")
   widget.addsPresetGoals()
-  widget.pointSystem()
   widget.show()
 
   sys.exit(app.exec())

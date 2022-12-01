@@ -99,8 +99,8 @@ class DatabaseClass():
     return l
 
   # only complete tasks (for points), subtasks can be removed
-  def completeTask(self, table, id):
+  def completeTask(self, id):
     # sets status of task to 1
-    if self.checkTable(table, id):
-      if table == "tasks":
-        self.db[table].update(id, {"status": 1})
+    table = "tasks"
+    if self.checkTable(table,id):
+      self.db[table].update(id, {"status": 1})
