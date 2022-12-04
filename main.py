@@ -152,7 +152,7 @@ class GUI(QDialog):
     try:
       task = self.goalList_Widget.selectedItems()
       task = task[0].text()
-      with open('outputtedTask.txt', 'w') as f:
+      with open('outputGoals.txt', 'w') as f:
           f.write(task)
           print("Exported Task")
       self.messageboxCreate("Export Completed", "Task has been exported.")
